@@ -20,7 +20,7 @@ move_type - A flag to let the player know if they are in a stage to add weights 
 
 board_state - The weights at each position on the board. '0' if the space is unoccupied and a weight can be placed there.
 
-s[62] - A flag to let the player know if the game has ended or not. 0 = The game is still going and the player must make a move, 1 = The game has ended.
+game_over - A flag to let the player know if the game has ended or not. 0 = The game is still going and the player must make a move, 1 = The game has ended.
 
 To make a move, the player must send a string to the server containing the following depending on the stage of the game:
 
@@ -50,13 +50,14 @@ When writing a client to interact with the server, the interaction works as foll
 * Listen to the server and receive `z` from the game, where `z` is the number of weights.
 * Continue listening to server. When it is your turn, the server will send the string describing the game state to you. You can then send your move per the instructions above.
 
+## Manual Play
+If you would like to play manually currently there is an online version: https://cims.nyu.edu/drecco2016/games/NoTipping/ for now.
+
 ## Random Strategy Test Client
 
-test.py is included to test your algorithm against. NOTE: test.py was written on Python 2.7. 
+noob_test_no_tipping.py is included to test your algorithm against.  
 
-To run the test script, use the same host name and port number that was used for the php script. For example, using our test.py you should use this command `python test.py <hostname:portnumber>`. Therefore, your code should also accept host name and port number as an argument.
-
-Description of random strategy: A Random Strategy should play the first or second player's game (depending on the command line). During AddMode, it should choose a random remaining block and place it as far left as possible so as to avoid tipping. During RemoveMode, it should examine all blocks on the board, determine which are will not cause tipping, and remove a random one of those. This should be a small challenge to defeat.
+To run the test script, use the same host name and port number that was used for the php script. You should use this command `python3 noob_test_no_tipping.py --port XXXX --name Alice. Therefore, your code should also accept name and port number as an argument.
 
 ## Localhost Server
 
