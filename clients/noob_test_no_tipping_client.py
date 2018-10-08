@@ -17,8 +17,16 @@ class NoTippingClient(object):
         self.board_length = int(response['board_length'])
         self.num_weights = int(response['num_weights'])
         self.myWeight = dict()
+        self.is_first = is_first
         for i in range(1, int(self.num_weights) + 1):
             self.myWeight[i] = 1;
+
+        if is_first:
+            self.position = -1
+        else:
+            self.position = -2
+
+        self.nextWeight = 1
 
     def play_game(self):
         # pass
@@ -52,20 +60,29 @@ class NoTippingClient(object):
         Output:
         position (Integer), weight (Integer)
         """
-        position = randint(-self.board_length, self.board_length)
-        weight = self.myWeight[randint(1, self.num_weights)]
-        num_tries = 0
-        self.check_balance(self.copy_board_with_updated_move(board_state, position, weight))
-        # import pdb; pdb.set_trace()
-        while board_state[(position + self.board_length) % self.board_length] != 0 and self.myWeight[weight] != 1 and num_tries < 10 and not self.check_balance(self.copy_board_with_updated_move(board_state, position, weight)):
-            import pdb; pdb.set_trace()
-            position = randint(-self.board_length, self.board_length)
-            weight = self.myWeight[randint(1, self.num_weights)]
-            num_tries += 1
+        # position = randint(-self.board_length, self.board_length)
+        # weight = self.myWeight[randint(1, self.num_weights)]
+        # num_tries = 0
+        # self.check_balance(self.copy_board_with_updated_move(board_state, position, weight))
+        # # import pdb; pdb.set_trace()
+        # while board_state[(position + self.board_length) % self.board_length] != 0 and self.myWeight[weight] != 1 and num_tries < 10 and not self.check_balance(self.copy_board_with_updated_move(board_state, position, weight)):
+        #     import pdb; pdb.set_trace()
+        #     position = randint(-self.board_length, self.board_length)
+        #     weight = self.myWeight[randint(1, self.num_weights)]
+        #     num_tries += 1
 
-        self.myWeight[weight] = 0
+        # self.myWeight[weight] = 0
+        sleep(2)
 
-        return position, weight
+        curr_position, weight = self.position, self.nextWeight
+        while board_state[(curr_position + self.board_length) % self.board_length] != 0:
+            # import pdb; pdb.set_trace()
+            curr_position += 1 if self.is_first else -1
+        
+        self.position = curr_position
+        self.nextWeight = weight + 1
+
+        return curr_position, weight
 
     def remove(self, board_state):
         """
