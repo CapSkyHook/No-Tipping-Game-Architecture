@@ -37,20 +37,16 @@ while(!$myGame->gameOver) {
     // $first_pos = "";
     for($i = -$board_length; $i <= $board_length; $i++){
         $next_pos = " " . $i;
-        // if ($first_pos == "") {
-        //     $first_pos = $next_pos;
-        // } else {
-        //     while (strlen($next_pos) < strlen($first_pos)) {
-        //         $next_pos = " " . $next_pos;
-        //     }   
-        // }
-
-        $board_indeces = $board_indeces . $next_pos;
         $next_value = (string) $myGame->boardState[$i];
         while (strlen($next_value) < strlen($next_pos)) {
             $next_value = " " . $next_value;
         }
 
+        while (strlen($next_pos) < strlen($next_value)) {
+            $next_pos = " " . $next_pos;
+        }
+
+        $board_indeces = $board_indeces . $next_pos;
         $board_state_output = $board_state_output . $next_value;
         
 
