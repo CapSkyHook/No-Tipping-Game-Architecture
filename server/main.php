@@ -37,7 +37,7 @@ while(!$myGame->gameOver) {
     // $first_pos = "";
     for($i = -$board_length; $i <= $board_length; $i++){
         $next_pos = " " . $i;
-        $next_value = (string) $myGame->boardState[$i];
+        $next_value = " " . (string) $myGame->boardState[$i];
         while (strlen($next_value) < strlen($next_pos)) {
             $next_value = " " . $next_value;
         }
