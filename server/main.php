@@ -22,7 +22,6 @@ foreach ($argv as $arg) {
 $myController = new GameController($host, $port);
 $myController->createConnection($numOfWeights, $board_length);
 $myGame = new Board($board_length, $numOfWeights, 3, $myController->player1, $myController->player2);
-
 while(!$myGame->gameOver) {
     echo "--------------------------------------------------------------------------------------------------------------\n";
     
@@ -33,8 +32,31 @@ while(!$myGame->gameOver) {
     } else {
         echo "Removing Stage, board state: \n";
     }
+    $board_indeces = "";
+    $board_state_output = "";
+    // $first_pos = "";
+    for($i = -$board_length; $i <= $board_length; $i++){
+        $next_pos = " " . $i;
+        // if ($first_pos == "") {
+        //     $first_pos = $next_pos;
+        // } else {
+        //     while (strlen($next_pos) < strlen($first_pos)) {
+        //         $next_pos = " " . $next_pos;
+        //     }   
+        // }
 
-    echo $sendingString['board_state'] . "\n";
+        $board_indeces = $board_indeces . $next_pos;
+        $next_value = (string) $myGame->boardState[$i];
+        while (strlen($next_value) < strlen($next_pos)) {
+            $next_value = " " . $next_value;
+        }
+
+        $board_state_output = $board_state_output . $next_value;
+        
+
+    }
+    echo $board_indeces . "\n";
+    echo $board_state_output . "\n";
     echo "Torque over left post at -4: " . $myGame->leftTorque . "\n";
     echo "Torque over right post at -1: " . $myGame->rightTorque . "\n";
     draw($myGame, false);
@@ -51,8 +73,10 @@ while(!$myGame->gameOver) {
     }
 
     if ($myGame->currentState == "place") {
+        echo "Placing weight " . $move->weight . " at position " . $move->position . "\n";
         $myGame->move((int)$move->weight, (int)$move->position);
     } else {
+        echo "Removing weight from position " . $move->position . "\n";
         $myGame->remove((int)$move->position);
     }
 
