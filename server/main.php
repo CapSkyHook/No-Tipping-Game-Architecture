@@ -35,8 +35,10 @@ while(!$myGame->gameOver) {
     }
 
     echo $sendingString['board_state'] . "\n";
-    echo $sendingString['game_over'] . "\n";
+    echo "Torque over left post at -4: " . $myGame->leftTorque . "\n";
+    echo "Torque over right post at -1: " . $myGame->rightTorque . "\n";
     draw($myGame, false);
+
 
     $myController->send($myGame->currentTurn, $myGame->generateSendingString());
     $time1 = microtime(true);
